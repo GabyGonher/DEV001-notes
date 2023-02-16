@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 // import './App.css';
 
 
-// const Login = () => <h1>Estamos en Login</h1>;
-
 const Login =() => {
   const navigate = useNavigate();
   function LoginGogle() {
