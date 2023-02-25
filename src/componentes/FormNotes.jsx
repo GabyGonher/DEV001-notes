@@ -1,18 +1,20 @@
   import { useState } from "react";
-  import { collection, addDoc, 
-          // getFirestore, addDocs, getDoc, doc, delateDoc, setDoc,
+  import { collection, addDoc,
+          // getDocs, getFirestore, addDocs, getDoc, doc, delateDoc, setDoc,
   } from "firebase/firestore";
   import { db } from "../Firebase/Configuracion";
 
-  export function FormNotes (){
 
+  export function FormNotes (){
 
 const valorInicial = {
   textarea: '',
 
 }
-
+// Variables de estado 
 const [user, setUser] = useState (valorInicial)
+// const  [lista, setLista] = useState([])  
+
 // Funcion que captura el valor de texTarea
 const capturaValue = (e) => {
   const {name, value} = e.target;
@@ -34,7 +36,28 @@ const saveData = async (e) =>{
   setUser({ ...valorInicial})
 }      
 
+// // Funcion para renderizar lista de usuarios
+// useEffect (() =>{
+//   const getLista = async () => {
+//     try {
+//       // Hace la peticion a la base de datos  (getdocs trae la coleccion de usuario)
+//     const querySnapshot = await getDocs(collection(db, 'usuarios'))
+//     const docs = []
+//     querySnapshot.forEach((doc)=> {
+//       docs.push({...doc.data(), id:doc.id})
+      
+//     });
+//     setLista(docs)
 
+      
+//     }catch(error){
+//       console.log(error);
+//     }
+//   }
+//   getLista()
+//   // dependencia de variable de estado
+//   //agrega elemento a la lista cada que hay un cambio 
+// },[lista])
 
 return (
   <>
@@ -43,11 +66,5 @@ return (
 <button className= 'btn'> Guardar </button>
   </form>
 </>
-
 )
   }
-
-
-  
-
-  
