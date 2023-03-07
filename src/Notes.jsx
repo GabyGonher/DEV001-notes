@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged, } from "firebase/auth";
 import { funcSignOut} from "./Firebase/func"
 import { FormNotes } from "./componentes/FormNotes";
+import { ListNotes } from "./componentes/ListNote";
 // import { buscarCrearDocumento } from "../src/Firebase/func";
 // import { BtnLogOut} from "./componentes/BtnLogOut";
 // import { collection, addDoc } from "firebase/firestore"; 
@@ -49,6 +50,7 @@ return (
   
   <button className='signOut' onClick={logOut}> Cerrar sesión</button>
   <FormNotes/>
+  <ListNotes/>
   {/* <BtnLogOut/> */}
   {/* <form name="formNote" >
   
