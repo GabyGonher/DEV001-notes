@@ -1,6 +1,8 @@
-import  React  from 'react';
+import  React from 'react';
+// import {  context} from "./context/context";
 import { loginWhitGoogle } from "./Firebase/func";
 import { useNavigate } from "react-router-dom";
+
 // import { logo } from "../assets/logo.jpg";
 // import './styles/login.css';
 

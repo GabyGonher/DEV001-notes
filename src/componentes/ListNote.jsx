@@ -1,87 +1,87 @@
-import React, { useEffect, useState } from "react";
- import { db } from "../Firebase/Configuracion";
-  import { collection, getDocs, doc, deleteDoc, getDoc
-          // getFirestore, addDocs, getDoc, doc,  setDoc, 
-  } from "firebase/firestore";
+import React, { useEffect, useState } from 'react';
+import { db } from '../Firebase/Configuracion';
+import {
+  collection,
+  getDocs,
+  doc,
+  deleteDoc,
+  query,
+  where,
+  // onSnapshot,
+} from 'firebase/firestore';
+import { FormNotes } from '../componentes/FormNotes';
 
-  export function ListNotes (){
+export function ListNotes({ uid }) {
   // variables de estado
-  const  [lista, setLista] = useState([])
-  // const [user, setUser] = useState (valorInicial)
-  const [render, setRender] = useState(false) 
-  // const [subId, setSubId] = useState ('') 
-  // const [save, setSave] = useState(false)
-  // 
+  // en ese estado vamos a manejar el estado de una nota que esta siendo creada o editada
+  const [notaGuardada, setNotaGuardada] = useState({
+    id: '',
+    uid: '',
+    textarea: '',
+  });
+  const [lista, setLista] = useState([]);
+  const [render, setRender] = useState(false); // Se encarga de renderizar
 
-
-  // Funcion para renderizar lista de usuarios
-useEffect (() =>{
-  console.log('ensayando');
-  const getLista = async () => {
-    
-
+  // Funcion que trae las notas
+  const getLista = async (id) => {
     try {
       // Hace la peticion a la base de datos  (getdocs trae la coleccion de usuario)
-    const querySnapshot = await getDocs(collection(db, 'usuarios'));
-    const docs = []
-    querySnapshot.forEach((doc)=> {
-      docs.push({...doc.data(), id:doc.id})
-      console.log(docs)
-      
-    });
-    setLista(docs)
+      const notesRef = collection(db, 'usuarios');
+      const q = query(notesRef, where('uid', '==', id));
+      // const q = query(collection(db, 'cities'), where('capital', '==', true));
+      const querySnapshot = await getDocs(q);
+      console.log(querySnapshot, 'QUERY');
+      const docs = [];
 
-      
-    }catch(error){
+      querySnapshot.forEach((doc) => {
+        docs.push({ ...doc.data(), id: doc.id });
+        console.log(docs, 'docs');
+      });
+      setLista(docs);
+      setRender(true);
+    } catch (error) {
       console.log(error);
     }
-  }
-  getLista()
-  // dependencia de variable de estado
-  // agrega elemento a la lista cada que hay un cambio 
-  setRender(false)
-   
-},[render])
+  };
+  // Funcion para renderizar lista de usuarios
+  useEffect(() => {
+    console.log('Renderiza');
+    getLista(uid);
+    console.log(getLista, 'GetListaUSE');
+    // dependencia de variable de estado
+    // agrega elemento a la lista cada que hay un cambio
+    // setRender(false);
+  }, [render]);
+  // Funcion para eliminar Notas
+  const delateNote = async (id) => {
+    setRender(true);
+    await deleteDoc(doc(db, 'usuarios', id));
+  };
 
-// },[])
+  return (
+    <div>
+      <FormNotes
+        uid={uid}
+        notaGuardada={notaGuardada}
+        setNotaGuardada={setNotaGuardada}
+      />
+      {lista.map((note) => (
+        <div key={note.id}>
+          <p>{`${note.textarea}`}</p>
+          <button className="btn-delate" onClick={() => delateNote(note.id)}>
+            Eliminar
+          </button>
+          <button className="edit" onClick={() => setNotaGuardada(note)}>
+            Editar
+          </button>
 
-// Funcion para eliminar Notas
-const delateNote = async (id) => {
-  setRender(true)
-  await deleteDoc (doc(db, "usuarios", id))
+          <hr />
+        </div>
+      ))}
+    </div>
+  );
 }
-// Funcion para Editar notas (peticion de un solo formulario)
-  // const getOne = async(id)=>{
-  //   try {
-  //     const docRef = (db, "usuarios", id)
-  //     const docSnap = await getDoc(docRef)
-  //     setUser(docSnap.data())
-  //   } catch (error){
-  //     console.log(error);
-  //   }
 
-  // }
-  // useEffect(() =>{
-  // if(subId !== ''){
-  //   getOne(setSubId)
-  // }
-  // }, [subId])
-
-
-return (
-
-  <div> {
-    lista.map(list => (
-      <div key = {list.id}>
-        <p>{`${list.textarea}`}</p>
-        {/* console.log({list.doc},'Prueba'); */}
-        {/* <p>{list.usurios}</p>  */}
-        <button className="btn-delate" onClick={() => delateNote(list.id)}>Eliminar</button>
-        <button className="edit" onClick={() => setSubId (list.textarea)}>Editar</button>
-        <hr/>
-      </div>
-    ))
-    }
-  </div>
-)
-  }
+// const unsub = onSnapshot(doc(db, "usuarios"), (doc) => {
+//     console.log("Current data: ", doc.data());
+// });
