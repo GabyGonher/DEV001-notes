@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { db } from '../Firebase/Configuracion';
 import {
   collection,
-  getDocs,
+  // getDocs,
   doc,
   deleteDoc,
   query,
   where,
-  // onSnapshot,
+  onSnapshot,
 } from 'firebase/firestore';
 import { FormNotes } from '../componentes/FormNotes';
 
@@ -20,41 +20,38 @@ export function ListNotes({ uid }) {
     textarea: '',
   });
   const [lista, setLista] = useState([]);
-  const [render, setRender] = useState(false); // Se encarga de renderizar
 
   // Funcion que trae las notas
-  const getLista = async (id) => {
-    try {
-      // Hace la peticion a la base de datos  (getdocs trae la coleccion de usuario)
-      const notesRef = collection(db, 'usuarios');
-      const q = query(notesRef, where('uid', '==', id));
-      // const q = query(collection(db, 'cities'), where('capital', '==', true));
-      const querySnapshot = await getDocs(q);
-      console.log(querySnapshot, 'QUERY');
+  const getLista = (id) => {
+    console.log(id, 'id');
+    // Hace la peticion a la base de datos  (getdocs trae la coleccion de usuario)
+    const notesRef = collection(db, 'usuarios');
+    const q = query(notesRef, where('uid', '==', id));
+    return onSnapshot(q, (querySnapshot) => {
       const docs = [];
-
       querySnapshot.forEach((doc) => {
+        console.log(doc);
         docs.push({ ...doc.data(), id: doc.id });
-        console.log(docs, 'docs');
       });
+      console.log(docs, 'docs');
       setLista(docs);
-      setRender(true);
-    } catch (error) {
-      console.log(error);
-    }
+    });
   };
   // Funcion para renderizar lista de usuarios
   useEffect(() => {
     console.log('Renderiza');
-    getLista(uid);
-    console.log(getLista, 'GetListaUSE');
-    // dependencia de variable de estado
-    // agrega elemento a la lista cada que hay un cambio
-    // setRender(false);
-  }, [render]);
+    const dejarDeObservarCambiosEnLaColecciondeNotas = getLista(uid);
+
+    return () => {
+      // esto se va a ejecutar al desmontar el componente
+      dejarDeObservarCambiosEnLaColecciondeNotas();
+    };
+
+    // dependencias del useEffect
+    // el array vacio indica que esta funcion se debe ejecutar una vez despues que el componente es montado
+  }, []);
   // Funcion para eliminar Notas
   const delateNote = async (id) => {
-    setRender(true);
     await deleteDoc(doc(db, 'usuarios', id));
   };
 
@@ -81,7 +78,3 @@ export function ListNotes({ uid }) {
     </div>
   );
 }
-
-// const unsub = onSnapshot(doc(db, "usuarios"), (doc) => {
-//     console.log("Current data: ", doc.data());
-// });

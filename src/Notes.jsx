@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { funcSignOut } from './Firebase/func';
@@ -10,21 +10,22 @@ const Notes = () => {
   let [uid, setUid] = useState('');
 
   const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    // console.log(user);
-    // uid = user.uid;
-    setUid(() => {
-      return user.uid;
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUid(() => {
+          return user.uid;
+        });
+        const displayName = user.displayName;
+        if (displayName !== null) {
+          setName(displayName);
+        } else {
+          console.log('Cuenta no valida');
+        }
+      }
     });
-    const displayName = user.displayName;
-    console.log(displayName);
-    if (displayName !== null) {
-      setName(displayName);
-    } else {
-      console.log('Cuenta no valida');
-    }
-    // console.log(displayName, 'displayname');
-  });
+  }, []);
 
   //  console.log(setUid, 'VALUE-UID');
 
@@ -50,7 +51,7 @@ const Notes = () => {
       </button>
 
       {/* <ListNotes /> */}
-      <ListNotes uid={uid} />
+      {uid ? <ListNotes uid={uid} /> : <span>cargando....</span>}
     </React.Fragment>
   );
 };

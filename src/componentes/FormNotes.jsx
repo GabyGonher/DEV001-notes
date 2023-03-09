@@ -14,15 +14,12 @@ export function FormNotes({ notaGuardada, setNotaGuardada, uid }) {
     e.preventDefault();
     if (notaGuardada.id === '') {
       try {
-        //  uid
-
         await addDoc(collection(db, 'usuarios'), {
           ...notaGuardada,
         });
       } catch (error) {
         console.log(error);
       }
-      // ... notaGuardada
     } else {
       await setDoc(doc(db, 'usuarios', notaGuardada.id), {
         ...notaGuardada,
