@@ -17,7 +17,7 @@ const Login = () => {
   return (
     <React.Fragment>
       <div className="contenido1">
-        <img className="logo" alt="logo" src="../src/assets/logo.png" />
+        <img className="logo" alt="logo" src="/assets/logo.png" />
         <h2 className="tituloI">Iniciar sesión</h2>
         <p className="txt">
           {' '}

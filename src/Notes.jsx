@@ -53,7 +53,7 @@ const Notes = () => {
       {uid ? (
         <ListNotes uid={uid} />
       ) : (
-        <img className="loading" src="src\imagen\Spin.gif" />
+        <img className="loading" src="/assets/Spin.gif" />
       )}
     </React.Fragment>
   );
