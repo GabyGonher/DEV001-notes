@@ -1,0 +1,93 @@
+.btn-content {
+  display: flex;
+  position: absolute;
+}
+.btn-delate,
+.edit,
+.btn {
+  font-size: 15px;
+  color: black;
+  border-radius: 2px;
+  border: 2px solid var(--mar);
+}
+.spaceNote {
+  font-size: 1rem;
+  padding: 10%;
+  position: static;
+  top: 55%;
+}
+.formTex {
+  display: grid;
+  place-items: center;
+}
+.signOut {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  float: right;
+  background-color: transparent;
+  background-image: url('../assets/logOut.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 24px 24px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font-size: 1.2em;
+  color: transparent;
+  cursor: pointer;
+}
+button:hover {
+  border-color: black;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+.btn {
+  background-color: #d2ba47;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 1em;
+}
+.divBtn button:first-child {
+  margin-right: 10px;
+}
+.divBtn button:last-child {
+  margin-left: 10px;
+}
+@media (min-width: 900px) {
+  .spaceNote {
+    padding: 8%;
+  }
+  .signOut {
+    background-color: #d2ba47;
+    background-image: none;
+    width: auto;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    padding: 0.4em 1em;
+    font-size: 1.2em;
+    color: black;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.25s;
+  }
+}
+@media (min-width: 1200px) {
+  .spaceNote {
+    padding: 10lvh;
+  }
+
+  .signOut {
+    font-size: 1.5em;
+  }
+  .btn {
+    font-size: 21px;
+    padding: 10px;
+  }
+}
