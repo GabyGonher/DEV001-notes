@@ -7,7 +7,7 @@ Herramientas utilizadas: JavaScript, CSS, HTML, React, Firebase, Vercel, Metodol
 * [2. Historias de usuario](#3-historias-de-usuario)
 * [3. Protitipo del proyecto](#4-prototipo-del-proyecto)
 * [4. Implementacion final](#5-implementación-final)
-* 
+
 ***
 
 
@@ -86,14 +86,11 @@ Protitipo para móvil:
 ## 4. Implementación final
 Versión para escritorio:
 ![versionDesktop](https://github.com/GabyGonher/DEV001-notes/assets/114185794/c29b5a6b-0a77-46ea-b666-e3ec2a363a3e)
-
-
 ![version desktopnotas](https://github.com/GabyGonher/DEV001-notes/assets/114185794/04815073-8ec3-41c6-b49b-1d32b74cfb58)
+
 
 Versión para móvil:
 ![versionmobil](https://github.com/GabyGonher/DEV001-notes/assets/114185794/9b8939c4-9d78-4144-be22-92f78b8d7df4)
-
-
 ![versionMobil notas](https://github.com/GabyGonher/DEV001-notes/assets/114185794/682f49c9-c9df-43be-883f-eab97fbae4e3)
 
 
